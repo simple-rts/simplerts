@@ -5,7 +5,9 @@ Simple RTS made with p5js
 
 # How to play
 
-Open `index.html` in your browser!
+Play [here!](https://simple-rts.github.io/simplerts/)
+
+Or if you have the project locally, just open `index.html` in your browser!
 
 * Select your units by dragging the mouse.
 * Issue commands with right clicks.
