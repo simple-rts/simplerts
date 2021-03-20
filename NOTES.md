@@ -38,20 +38,37 @@ Open the console in VSCode and select `DEBUG CONSOLE` to have an interactive con
 # Plan
 
 [x] Capturable nodes which become buildings
+
 [x] move id out from unit (it's just the index in the global entities)
+
 [x] enums as statics
+
 [x] p5js locally for intellisense
+
 [x] generic entities
+
 [x] Buildings can be destroyed
+
 [x] Node is freed when building is destroyed
+
 [ ] cleanup and upload to git
+
 [ ] borders (collisions/ridigBodies in general?)
+
 [ ] kill/damage only if you come from behind or come to a still target?
+
 [ ] Grid for navigation
+
 [ ] Spatial division for fast neighbors querying
+
 [ ] spacing between units in a group (no overlap)
+
 [ ] units cap
+
 [ ] win/lose conditions
+
 [ ] enemy AI
+
 [ ] UI for units' production in buildings
+
 [ ] add code to modulate frame rate
