@@ -2,9 +2,12 @@
 /// <reference path="./p5.global-mode.d.ts" />
 "use strict";
 
+/** @type {EntityGroup} */
 let entities;
+/** @type {EntityGroup} */
 let selectedUnits;
 
+/** @type {GameManager} */
 let gm;
 
 let simulationPaused;
@@ -51,7 +54,7 @@ function setup() {
 
     // initial set of units
     let s = 100;
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 15; i++) {
         let x = width / 3 * 2 + random(- s, s);
         let y = height / 3 * 2 + random(- s, s);
         let u = new Unit(x, y, playersEnum.you);
@@ -201,11 +204,7 @@ function mouseReleased(event) {
     // commands (RMB)
     // @ts-ignore
     if (event.button === mouseButtons.RMB) {
-        // @ts-ignore
-        selectedUnits._entities
-            .forEach(u => {
-                u.moveTo(mouseX, mouseY);    
-            });
+        selectedUnits.moveGroupTo(mouseX, mouseY);
     }
 }
 
@@ -355,16 +354,20 @@ class Entity {
 class EntityGroup {
     constructor() {
         this._entities = [];
-
-        // https://javascript.info/property-accessors
-        Object.defineProperty(this, 'length', {
-            get() {
-                return this._entities.length;
-            }
-        });
+        // Object.defineProperty(this, 'length', {
+        //     get() {
+        //         return this._entities.length;
+        //     }
+        // });
 
         // TODO how to define [] accessors on this class in plain javascript?
     }
+    // // https://javascript.info/property-accessors
+    get length() {
+        return this._entities.length;
+    }
+    static spiralFormationStep = 15.0;
+    static unitsRingRatioFormation = 5;
     /**
      * @param {Entity} e
      */
@@ -373,6 +376,36 @@ class EntityGroup {
     }
     empty() {
         this._entities = [];
+    }
+    moveGroupTo(x, y) {
+        // we don't move all units to the same point,
+        // but we separate with a formation
+        let ring = 0;
+        let i = -1;
+        let center = createVector(x, y);
+        let point = null;
+        let s = EntityGroup.spiralFormationStep;
+        let ur = EntityGroup.unitsRingRatioFormation;
+        let angle = 0;
+        let startingCenter = this._entities
+            .map(u=>u.position)
+            .reduce((p,c)=>p5.Vector.add(p, c))
+            .div(this._entities.length);
+        let heading = p5.Vector.sub(startingCenter, center).heading();
+        for (const u of this._entities) {
+            angle = (ring===0) ? 0 : heading + (i / (ring * ur)) * TWO_PI;
+            point = p5.Vector.add(
+                center,
+                createVector(cos(angle),sin(angle)).mult(ring*s));
+            if (i === (ring * ur) - 1) {
+                // advance to outer ring and reset i
+                ring++;
+                i = 0;
+            } else {
+                i++;
+            }
+            u.moveTo(point.x, point.y);
+        }
     }
 }
 

@@ -51,9 +51,11 @@ Open the console in VSCode and select `DEBUG CONSOLE` to have an interactive con
 
 [x] Node is freed when building is destroyed
 
-[ ] cleanup and upload to git
+[x] cleanup and upload to git
 
 [ ] borders (collisions/ridigBodies in general?)
+
+[x] formations
 
 [ ] kill/damage only if you come from behind or come to a still target?
 
@@ -72,3 +74,9 @@ Open the console in VSCode and select `DEBUG CONSOLE` to have an interactive con
 [ ] UI for units' production in buildings
 
 [ ] add code to modulate frame rate
+
+[ ] HUD
+
+[ ] single click selection
+
+[ ] layered rendering
